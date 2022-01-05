@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="genfarkModelStoreContainer" CdmEntityContainer="genfarkEntities">
+    <EntitySetMapping Name="Admin">
+      <EntityTypeMapping TypeName="genfarkModel.Admin">
+        <MappingFragment StoreEntitySet="Admin">
+          <ScalarProperty Name="Yonetici_id" ColumnName="Yonetici_id" />
+          <ScalarProperty Name="Yonetici_ad" ColumnName="Yonetici_ad" />
+          <ScalarProperty Name="Yonetici_sifre" ColumnName="Yonetici_sifre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FarkındalıkHastalıgı">
+      <EntityTypeMapping TypeName="genfarkModel.FarkındalıkHastalıgı">
+        <MappingFragment StoreEntitySet="FarkındalıkHastalıgı">
+          <ScalarProperty Name="FHastalik_id" ColumnName="FHastalik_id" />
+          <ScalarProperty Name="FHastalik_Kod" ColumnName="FHastalik_Kod" />
+          <ScalarProperty Name="FHastalik_Bilgi" ColumnName="FHastalik_Bilgi" />
+          <ScalarProperty Name="FHastalik_Tarih" ColumnName="FHastalik_Tarih" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="İletisim">
+      <EntityTypeMapping TypeName="genfarkModel.İletisim">
+        <MappingFragment StoreEntitySet="İletisim">
+          <ScalarProperty Name="İletisim_id" ColumnName="İletisim_id" />
+          <ScalarProperty Name="İletisim_konusu" ColumnName="İletisim_konusu" />
+          <ScalarProperty Name="İletisim_icerik" ColumnName="İletisim_icerik" />
+          <ScalarProperty Name="İletisim_sahip" ColumnName="İletisim_sahip" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Kalıtsal_Hastalık">
+      <EntityTypeMapping TypeName="genfarkModel.Kalıtsal_Hastalık">
+        <MappingFragment StoreEntitySet="Kalıtsal_Hastalık">
+          <ScalarProperty Name="KHastalik_id" ColumnName="KHastalik_id" />
+          <ScalarProperty Name="KHastalik_ad" ColumnName="KHastalik_ad" />
+          <ScalarProperty Name="KHastalik_bilgi" ColumnName="KHastalik_bilgi" />
+          <ScalarProperty Name="KHastalik_foto" ColumnName="KHastalik_foto" />
+          <ScalarProperty Name="KHastalik_tarih" ColumnName="KHastalik_tarih" />
+          <ScalarProperty Name="Kategori_id" ColumnName="Kategori_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Kategoriler">
+      <EntityTypeMapping TypeName="genfarkModel.Kategoriler">
+        <MappingFragment StoreEntitySet="Kategoriler">
+          <ScalarProperty Name="Kategori_id" ColumnName="Kategori_id" />
+          <ScalarProperty Name="Kategori_ad" ColumnName="Kategori_ad" />
+          <ScalarProperty Name="Kategoriadet" ColumnName="Kategoriadet" />
+          <ScalarProperty Name="KategoriFoto" ColumnName="KategoriFoto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="yorumlar">
+      <EntityTypeMapping TypeName="genfarkModel.yorumlar">
+        <MappingFragment StoreEntitySet="yorumlar">
+          <ScalarProperty Name="Yorum_id" ColumnName="Yorum_id" />
+          <ScalarProperty Name="Yorum_ad" ColumnName="Yorum_ad" />
+          <ScalarProperty Name="Yorum_soyad" ColumnName="Yorum_soyad" />
+          <ScalarProperty Name="Yorum_mail" ColumnName="Yorum_mail" />
+          <ScalarProperty Name="Yorum_tarih" ColumnName="Yorum_tarih" />
+          <ScalarProperty Name="Yorum_onay" ColumnName="Yorum_onay" />
+          <ScalarProperty Name="Yorum_icerik" ColumnName="Yorum_icerik" />
+          <ScalarProperty Name="KHastalik_id" ColumnName="KHastalik_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="yorumRaporu">
+      <EntityTypeMapping TypeName="genfarkModel.yorumRaporu">
+        <MappingFragment StoreEntitySet="yorumRaporu">
+          <ScalarProperty Name="Yorum_tarih" ColumnName="Yorum_tarih" />
+          <ScalarProperty Name="Yorum_soyad" ColumnName="Yorum_soyad" />
+          <ScalarProperty Name="Yorum_ad" ColumnName="Yorum_ad" />
+          <ScalarProperty Name="KHastalik_ad" ColumnName="KHastalik_ad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="kalıtsalDetay" FunctionName="genfarkModel.Store.kalıtsalDetay">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="genfarkModel.kalıtsalDetay_Result">
+          <ScalarProperty Name="KHastalik_ad" ColumnName="KHastalik_ad" />
+          <ScalarProperty Name="KHastalik_bilgi" ColumnName="KHastalik_bilgi" />
+          <ScalarProperty Name="KHastalik_foto" ColumnName="KHastalik_foto" />
+          <ScalarProperty Name="KHastalik_tarih" ColumnName="KHastalik_tarih" />
+          <ScalarProperty Name="Kategori_ad" ColumnName="Kategori_ad" />
+          <ScalarProperty Name="Kategoriadet" ColumnName="Kategoriadet" />
+          <ScalarProperty Name="KategoriFoto" ColumnName="KategoriFoto" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_yorum" FunctionName="genfarkModel.Store.sp_yorum">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="genfarkModel.sp_yorum_Result">
+          <ScalarProperty Name="Yorum_id" ColumnName="Yorum_id" />
+          <ScalarProperty Name="Yorum_ad" ColumnName="Yorum_ad" />
+          <ScalarProperty Name="Yorum_soyad" ColumnName="Yorum_soyad" />
+          <ScalarProperty Name="Yorum_mail" ColumnName="Yorum_mail" />
+          <ScalarProperty Name="Yorum_tarih" ColumnName="Yorum_tarih" />
+          <ScalarProperty Name="Yorum_onay" ColumnName="Yorum_onay" />
+          <ScalarProperty Name="Yorum_icerik" ColumnName="Yorum_icerik" />
+          <ScalarProperty Name="KHastalik_id" ColumnName="KHastalik_id" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="genfarkModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="genfarkModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="genfarkModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="genfarkModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="genfarkModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="genfarkModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="genfarkModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="genfarkModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="genfarkModel.Store.sp_upgraddiagrams" />
+  </EntityContainerMapping>
+</Mapping>

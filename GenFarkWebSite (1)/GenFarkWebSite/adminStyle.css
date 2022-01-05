@@ -1,0 +1,107 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    background-image: url('dna.jpg');
+    position: absolute;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed; /*//sayfayı sabitleme*/
+}
+
+.form-box {
+    width: 380px;
+    height: 480px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.842);
+    box-shadow: 0 0 20px 9px #6865641e;
+    border-radius: 35px;
+    margin: 6% auto;
+    padding: 10px;
+}
+
+.button-box {
+    width: 220px;
+    margin: 35px auto;
+    position: relative;
+    box-shadow: 0 0 20px 9px #ff6a00;
+    border-radius: 35px;
+}
+
+.toggle-btn {
+    position: relative;
+    padding: 10px 10px;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 13px;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+#btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 110px;
+    height: 100%;
+    background: linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%);
+    border-radius: 35px;
+    transition: .5s;
+}
+
+.button-box button:nth-child(1) {
+    color: white;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .social-icons lottie-player {
+        width: 40px;
+        margin: 0px 12px;
+        cursor: pointer;
+    }
+
+.input-group {
+    position: absolute;
+    top: 180px;
+    width: 280px;
+    transition: .5s;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    margin: 5px 0;
+    background: transparent;
+    border-bottom: 1px solid rgb(255 106 0);
+    outline: none;
+}
+
+.submit-btn {
+    display: block;
+    width: 85%;
+    padding: 10px;
+    border: none;
+    background: linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%);
+    border-radius: 35px;
+    cursor: pointer;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    margin: auto;
+    outline: none;
+    font-size: 15px;
+    font-weight: 600;
+    margin: auto;
+    outline: none;
+}

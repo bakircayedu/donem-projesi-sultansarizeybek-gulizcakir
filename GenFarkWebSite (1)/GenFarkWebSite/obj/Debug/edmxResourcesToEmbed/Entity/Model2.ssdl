@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="genfarkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="Yonetici_id" />
+    </Key>
+    <Property Name="Yonetici_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Yonetici_ad" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Yonetici_sifre" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FarkındalıkHastalıgı">
+    <Key>
+      <PropertyRef Name="FHastalik_id" />
+    </Key>
+    <Property Name="FHastalik_id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FHastalik_Kod" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FHastalik_Bilgi" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FHastalik_Tarih" Type="smalldatetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="İletisim">
+    <Key>
+      <PropertyRef Name="İletisim_id" />
+    </Key>
+    <Property Name="İletisim_id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="İletisim_konusu" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="İletisim_icerik" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="İletisim_sahip" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Kalıtsal_Hastalık">
+    <Key>
+      <PropertyRef Name="KHastalik_id" />
+    </Key>
+    <Property Name="KHastalik_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KHastalik_ad" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="KHastalik_bilgi" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="KHastalik_foto" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="KHastalik_tarih" Type="smalldatetime" Nullable="false" />
+    <Property Name="Kategori_id" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Kategoriler">
+    <Key>
+      <PropertyRef Name="Kategori_id" />
+    </Key>
+    <Property Name="Kategori_id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Kategori_ad" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Kategoriadet" Type="smallint" Nullable="false" />
+    <Property Name="KategoriFoto" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="yorumlar">
+    <Key>
+      <PropertyRef Name="Yorum_id" />
+    </Key>
+    <Property Name="Yorum_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Yorum_ad" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Yorum_soyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Yorum_mail" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Yorum_tarih" Type="smalldatetime" Nullable="false" />
+    <Property Name="Yorum_onay" Type="bit" Nullable="false" />
+    <Property Name="Yorum_icerik" Type="nvarchar" MaxLength="700" Nullable="false" />
+    <Property Name="KHastalik_id" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'genfark.dbo.yorumRaporu' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="yorumRaporu">
+    <Key>
+      <PropertyRef Name="KHastalik_ad" />
+      <PropertyRef Name="Yorum_ad" />
+      <PropertyRef Name="Yorum_soyad" />
+      <PropertyRef Name="Yorum_tarih" />
+    </Key>
+    <Property Name="KHastalik_ad" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Yorum_ad" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Yorum_soyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Yorum_tarih" Type="smalldatetime" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Kalıtsal_Hastalık_Kategoriler">
+    <End Role="Kategoriler" Type="Self.Kategoriler" Multiplicity="1" />
+    <End Role="Kalıtsal_Hastalık" Type="Self.Kalıtsal_Hastalık" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategoriler">
+        <PropertyRef Name="Kategori_id" />
+      </Principal>
+      <Dependent Role="Kalıtsal_Hastalık">
+        <PropertyRef Name="Kategori_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_yorumlar_Kalıtsal_Hastalık">
+    <End Role="Kalıtsal_Hastalık" Type="Self.Kalıtsal_Hastalık" Multiplicity="1" />
+    <End Role="yorumlar" Type="Self.yorumlar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kalıtsal_Hastalık">
+        <PropertyRef Name="KHastalik_id" />
+      </Principal>
+      <Dependent Role="yorumlar">
+        <PropertyRef Name="KHastalik_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="kalıtsalDetay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_yorum" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="genfarkModelStoreContainer">
+    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FarkındalıkHastalıgı" EntityType="Self.FarkındalıkHastalıgı" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="İletisim" EntityType="Self.İletisim" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kalıtsal_Hastalık" EntityType="Self.Kalıtsal_Hastalık" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kategoriler" EntityType="Self.Kategoriler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="yorumlar" EntityType="Self.yorumlar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="yorumRaporu" EntityType="Self.yorumRaporu" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [yorumRaporu].[KHastalik_ad] AS [KHastalik_ad], 
+    [yorumRaporu].[Yorum_ad] AS [Yorum_ad], 
+    [yorumRaporu].[Yorum_soyad] AS [Yorum_soyad], 
+    [yorumRaporu].[Yorum_tarih] AS [Yorum_tarih]
+    FROM [dbo].[yorumRaporu] AS [yorumRaporu]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Kalıtsal_Hastalık_Kategoriler" Association="Self.FK_Kalıtsal_Hastalık_Kategoriler">
+      <End Role="Kategoriler" EntitySet="Kategoriler" />
+      <End Role="Kalıtsal_Hastalık" EntitySet="Kalıtsal_Hastalık" />
+    </AssociationSet>
+    <AssociationSet Name="FK_yorumlar_Kalıtsal_Hastalık" Association="Self.FK_yorumlar_Kalıtsal_Hastalık">
+      <End Role="Kalıtsal_Hastalık" EntitySet="Kalıtsal_Hastalık" />
+      <End Role="yorumlar" EntitySet="yorumlar" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

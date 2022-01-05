@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="genfarkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="Yonetici_id" />
+          </Key>
+          <Property Name="Yonetici_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Yonetici_ad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Yonetici_sifre" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FarkındalıkHastalıgı">
+          <Key>
+            <PropertyRef Name="FHastalik_id" />
+          </Key>
+          <Property Name="FHastalik_id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FHastalik_Kod" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FHastalik_Bilgi" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FHastalik_Tarih" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="İletisim">
+          <Key>
+            <PropertyRef Name="İletisim_id" />
+          </Key>
+          <Property Name="İletisim_id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="İletisim_konusu" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="İletisim_icerik" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="İletisim_adSoyad" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Kalıtsal_Hastalık">
+          <Key>
+            <PropertyRef Name="KHastalik_id" />
+          </Key>
+          <Property Name="KHastalik_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KHastalik_ad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="KHastalik_bilgi" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="KHastalik_foto" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="KHastalik_tarih" Type="smalldatetime" Nullable="false" />
+          <Property Name="Kategori_id" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kategoriler">
+          <Key>
+            <PropertyRef Name="Kategori_id" />
+          </Key>
+          <Property Name="Kategori_id" Type="smallint" Nullable="false" />
+          <Property Name="Kategori_ad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Kategoriadet" Type="smallint" Nullable="false" />
+          <Property Name="KategoriFoto" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="yorumlar">
+          <Key>
+            <PropertyRef Name="Yorum_id" />
+          </Key>
+          <Property Name="Yorum_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Yorum_ad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Yorum_soyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Yorum_mail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Yorum_tarih" Type="smalldatetime" Nullable="false" />
+          <Property Name="Yorum_onay" Type="bit" Nullable="false" />
+          <Property Name="Yorum_icerik" Type="nvarchar" MaxLength="700" Nullable="false" />
+          <Property Name="KHastalik_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Kalıtsal_Hastalık_Kategoriler">
+          <End Role="Kategoriler" Type="Self.Kategoriler" Multiplicity="1" />
+          <End Role="Kalıtsal_Hastalık" Type="Self.Kalıtsal_Hastalık" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategoriler">
+              <PropertyRef Name="Kategori_id" />
+            </Principal>
+            <Dependent Role="Kalıtsal_Hastalık">
+              <PropertyRef Name="Kategori_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_yorumlar_Kalıtsal_Hastalık">
+          <End Role="Kalıtsal_Hastalık" Type="Self.Kalıtsal_Hastalık" Multiplicity="1" />
+          <End Role="yorumlar" Type="Self.yorumlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kalıtsal_Hastalık">
+              <PropertyRef Name="KHastalik_id" />
+            </Principal>
+            <Dependent Role="yorumlar">
+              <PropertyRef Name="KHastalik_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="genfarkModelStoreContainer">
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FarkındalıkHastalıgı" EntityType="Self.FarkındalıkHastalıgı" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="İletisim" EntityType="Self.İletisim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kalıtsal_Hastalık" EntityType="Self.Kalıtsal_Hastalık" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kategoriler" EntityType="Self.Kategoriler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="yorumlar" EntityType="Self.yorumlar" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Kalıtsal_Hastalık_Kategoriler" Association="Self.FK_Kalıtsal_Hastalık_Kategoriler">
+            <End Role="Kategoriler" EntitySet="Kategoriler" />
+            <End Role="Kalıtsal_Hastalık" EntitySet="Kalıtsal_Hastalık" />
+          </AssociationSet>
+          <AssociationSet Name="FK_yorumlar_Kalıtsal_Hastalık" Association="Self.FK_yorumlar_Kalıtsal_Hastalık">
+            <End Role="Kalıtsal_Hastalık" EntitySet="Kalıtsal_Hastalık" />
+            <End Role="yorumlar" EntitySet="yorumlar" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="genfarkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="Yonetici_id" />
+          </Key>
+          <Property Name="Yonetici_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Yonetici_ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Yonetici_sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FarkındalıkHastalıgı">
+          <Key>
+            <PropertyRef Name="FHastalik_id" />
+          </Key>
+          <Property Name="FHastalik_id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FHastalik_Kod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FHastalik_Bilgi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FHastalik_Tarih" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="İletisim">
+          <Key>
+            <PropertyRef Name="İletisim_id" />
+          </Key>
+          <Property Name="İletisim_id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="İletisim_konusu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="İletisim_icerik" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="İletisim_adSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Kalıtsal_Hastalık">
+          <Key>
+            <PropertyRef Name="KHastalik_id" />
+          </Key>
+          <Property Name="KHastalik_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KHastalik_ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="KHastalik_bilgi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="KHastalik_foto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="KHastalik_tarih" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Kategori_id" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Kategoriler" Relationship="Self.FK_Kalıtsal_Hastalık_Kategoriler" FromRole="Kalıtsal_Hastalık" ToRole="Kategoriler" />
+          <NavigationProperty Name="yorumlar" Relationship="Self.FK_yorumlar_Kalıtsal_Hastalık" FromRole="Kalıtsal_Hastalık" ToRole="yorumlar" />
+        </EntityType>
+        <EntityType Name="Kategoriler">
+          <Key>
+            <PropertyRef Name="Kategori_id" />
+          </Key>
+          <Property Name="Kategori_id" Type="Int16" Nullable="false" />
+          <Property Name="Kategori_ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Kategoriadet" Type="Int16" Nullable="false" />
+          <Property Name="KategoriFoto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Kalıtsal_Hastalık" Relationship="Self.FK_Kalıtsal_Hastalık_Kategoriler" FromRole="Kategoriler" ToRole="Kalıtsal_Hastalık" />
+        </EntityType>
+        <EntityType Name="yorumlar">
+          <Key>
+            <PropertyRef Name="Yorum_id" />
+          </Key>
+          <Property Name="Yorum_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Yorum_ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Yorum_soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Yorum_mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Yorum_tarih" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Yorum_onay" Type="Boolean" Nullable="false" />
+          <Property Name="Yorum_icerik" Type="String" MaxLength="700" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="KHastalik_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Kalıtsal_Hastalık" Relationship="Self.FK_yorumlar_Kalıtsal_Hastalık" FromRole="yorumlar" ToRole="Kalıtsal_Hastalık" />
+        </EntityType>
+        <Association Name="FK_Kalıtsal_Hastalık_Kategoriler">
+          <End Role="Kategoriler" Type="Self.Kategoriler" Multiplicity="1" />
+          <End Role="Kalıtsal_Hastalık" Type="Self.Kalıtsal_Hastalık" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategoriler">
+              <PropertyRef Name="Kategori_id" />
+            </Principal>
+            <Dependent Role="Kalıtsal_Hastalık">
+              <PropertyRef Name="Kategori_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_yorumlar_Kalıtsal_Hastalık">
+          <End Role="Kalıtsal_Hastalık" Type="Self.Kalıtsal_Hastalık" Multiplicity="1" />
+          <End Role="yorumlar" Type="Self.yorumlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kalıtsal_Hastalık">
+              <PropertyRef Name="KHastalik_id" />
+            </Principal>
+            <Dependent Role="yorumlar">
+              <PropertyRef Name="KHastalik_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="genfarkEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admin" EntityType="Self.Admin" />
+          <EntitySet Name="FarkındalıkHastalıgı" EntityType="Self.FarkındalıkHastalıgı" />
+          <EntitySet Name="İletisim" EntityType="Self.İletisim" />
+          <EntitySet Name="Kalıtsal_Hastalık" EntityType="Self.Kalıtsal_Hastalık" />
+          <EntitySet Name="Kategoriler" EntityType="Self.Kategoriler" />
+          <EntitySet Name="yorumlar" EntityType="Self.yorumlar" />
+          <AssociationSet Name="FK_Kalıtsal_Hastalık_Kategoriler" Association="Self.FK_Kalıtsal_Hastalık_Kategoriler">
+            <End Role="Kategoriler" EntitySet="Kategoriler" />
+            <End Role="Kalıtsal_Hastalık" EntitySet="Kalıtsal_Hastalık" />
+          </AssociationSet>
+          <AssociationSet Name="FK_yorumlar_Kalıtsal_Hastalık" Association="Self.FK_yorumlar_Kalıtsal_Hastalık">
+            <End Role="Kalıtsal_Hastalık" EntitySet="Kalıtsal_Hastalık" />
+            <End Role="yorumlar" EntitySet="yorumlar" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="genfarkModelStoreContainer" CdmEntityContainer="genfarkEntities">
+          <EntitySetMapping Name="Admin">
+            <EntityTypeMapping TypeName="genfarkModel.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="Yonetici_id" ColumnName="Yonetici_id" />
+                <ScalarProperty Name="Yonetici_ad" ColumnName="Yonetici_ad" />
+                <ScalarProperty Name="Yonetici_sifre" ColumnName="Yonetici_sifre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FarkındalıkHastalıgı">
+            <EntityTypeMapping TypeName="genfarkModel.FarkındalıkHastalıgı">
+              <MappingFragment StoreEntitySet="FarkındalıkHastalıgı">
+                <ScalarProperty Name="FHastalik_id" ColumnName="FHastalik_id" />
+                <ScalarProperty Name="FHastalik_Kod" ColumnName="FHastalik_Kod" />
+                <ScalarProperty Name="FHastalik_Bilgi" ColumnName="FHastalik_Bilgi" />
+                <ScalarProperty Name="FHastalik_Tarih" ColumnName="FHastalik_Tarih" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="İletisim">
+            <EntityTypeMapping TypeName="genfarkModel.İletisim">
+              <MappingFragment StoreEntitySet="İletisim">
+                <ScalarProperty Name="İletisim_id" ColumnName="İletisim_id" />
+                <ScalarProperty Name="İletisim_konusu" ColumnName="İletisim_konusu" />
+                <ScalarProperty Name="İletisim_icerik" ColumnName="İletisim_icerik" />
+                <ScalarProperty Name="İletisim_adSoyad" ColumnName="İletisim_adSoyad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kalıtsal_Hastalık">
+            <EntityTypeMapping TypeName="genfarkModel.Kalıtsal_Hastalık">
+              <MappingFragment StoreEntitySet="Kalıtsal_Hastalık">
+                <ScalarProperty Name="KHastalik_id" ColumnName="KHastalik_id" />
+                <ScalarProperty Name="KHastalik_ad" ColumnName="KHastalik_ad" />
+                <ScalarProperty Name="KHastalik_bilgi" ColumnName="KHastalik_bilgi" />
+                <ScalarProperty Name="KHastalik_foto" ColumnName="KHastalik_foto" />
+                <ScalarProperty Name="KHastalik_tarih" ColumnName="KHastalik_tarih" />
+                <ScalarProperty Name="Kategori_id" ColumnName="Kategori_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kategoriler">
+            <EntityTypeMapping TypeName="genfarkModel.Kategoriler">
+              <MappingFragment StoreEntitySet="Kategoriler">
+                <ScalarProperty Name="Kategori_id" ColumnName="Kategori_id" />
+                <ScalarProperty Name="Kategori_ad" ColumnName="Kategori_ad" />
+                <ScalarProperty Name="Kategoriadet" ColumnName="Kategoriadet" />
+                <ScalarProperty Name="KategoriFoto" ColumnName="KategoriFoto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="yorumlar">
+            <EntityTypeMapping TypeName="genfarkModel.yorumlar">
+              <MappingFragment StoreEntitySet="yorumlar">
+                <ScalarProperty Name="Yorum_id" ColumnName="Yorum_id" />
+                <ScalarProperty Name="Yorum_ad" ColumnName="Yorum_ad" />
+                <ScalarProperty Name="Yorum_soyad" ColumnName="Yorum_soyad" />
+                <ScalarProperty Name="Yorum_mail" ColumnName="Yorum_mail" />
+                <ScalarProperty Name="Yorum_tarih" ColumnName="Yorum_tarih" />
+                <ScalarProperty Name="Yorum_onay" ColumnName="Yorum_onay" />
+                <ScalarProperty Name="Yorum_icerik" ColumnName="Yorum_icerik" />
+                <ScalarProperty Name="KHastalik_id" ColumnName="KHastalik_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

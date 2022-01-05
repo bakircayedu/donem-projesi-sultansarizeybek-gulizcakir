@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="genfarkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="Yonetici_id" />
+    </Key>
+    <Property Name="Yonetici_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Yonetici_ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Yonetici_sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FarkındalıkHastalıgı">
+    <Key>
+      <PropertyRef Name="FHastalik_id" />
+    </Key>
+    <Property Name="FHastalik_id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FHastalik_Kod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FHastalik_Bilgi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FHastalik_Tarih" Type="DateTime" Nullable="false" Precision="0" />
+  </EntityType>
+  <EntityType Name="İletisim">
+    <Key>
+      <PropertyRef Name="İletisim_id" />
+    </Key>
+    <Property Name="İletisim_id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="İletisim_konusu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="İletisim_icerik" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="İletisim_sahip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Kalıtsal_Hastalık">
+    <Key>
+      <PropertyRef Name="KHastalik_id" />
+    </Key>
+    <Property Name="KHastalik_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KHastalik_ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="KHastalik_bilgi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="KHastalik_foto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="KHastalik_tarih" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Kategori_id" Type="Int16" Nullable="false" />
+    <NavigationProperty Name="Kategoriler" Relationship="Self.FK_Kalıtsal_Hastalık_Kategoriler" FromRole="Kalıtsal_Hastalık" ToRole="Kategoriler" />
+    <NavigationProperty Name="yorumlar" Relationship="Self.FK_yorumlar_Kalıtsal_Hastalık" FromRole="Kalıtsal_Hastalık" ToRole="yorumlar" />
+  </EntityType>
+  <EntityType Name="Kategoriler">
+    <Key>
+      <PropertyRef Name="Kategori_id" />
+    </Key>
+    <Property Name="Kategori_id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Kategori_ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Kategoriadet" Type="Int16" Nullable="false" />
+    <Property Name="KategoriFoto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Kalıtsal_Hastalık" Relationship="Self.FK_Kalıtsal_Hastalık_Kategoriler" FromRole="Kategoriler" ToRole="Kalıtsal_Hastalık" />
+  </EntityType>
+  <EntityType Name="yorumlar">
+    <Key>
+      <PropertyRef Name="Yorum_id" />
+    </Key>
+    <Property Name="Yorum_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Yorum_ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Yorum_soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Yorum_mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Yorum_tarih" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Yorum_onay" Type="Boolean" Nullable="false" />
+    <Property Name="Yorum_icerik" Type="String" MaxLength="700" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="KHastalik_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Kalıtsal_Hastalık" Relationship="Self.FK_yorumlar_Kalıtsal_Hastalık" FromRole="yorumlar" ToRole="Kalıtsal_Hastalık" />
+  </EntityType>
+  <Association Name="FK_Kalıtsal_Hastalık_Kategoriler">
+    <End Role="Kategoriler" Type="Self.Kategoriler" Multiplicity="1" />
+    <End Role="Kalıtsal_Hastalık" Type="Self.Kalıtsal_Hastalık" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategoriler">
+        <PropertyRef Name="Kategori_id" />
+      </Principal>
+      <Dependent Role="Kalıtsal_Hastalık">
+        <PropertyRef Name="Kategori_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_yorumlar_Kalıtsal_Hastalık">
+    <End Role="Kalıtsal_Hastalık" Type="Self.Kalıtsal_Hastalık" Multiplicity="1" />
+    <End Role="yorumlar" Type="Self.yorumlar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kalıtsal_Hastalık">
+        <PropertyRef Name="KHastalik_id" />
+      </Principal>
+      <Dependent Role="yorumlar">
+        <PropertyRef Name="KHastalik_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="genfarkEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Admin" EntityType="Self.Admin" />
+    <EntitySet Name="FarkındalıkHastalıgı" EntityType="Self.FarkındalıkHastalıgı" />
+    <EntitySet Name="İletisim" EntityType="Self.İletisim" />
+    <EntitySet Name="Kalıtsal_Hastalık" EntityType="Self.Kalıtsal_Hastalık" />
+    <EntitySet Name="Kategoriler" EntityType="Self.Kategoriler" />
+    <EntitySet Name="yorumlar" EntityType="Self.yorumlar" />
+    <AssociationSet Name="FK_Kalıtsal_Hastalık_Kategoriler" Association="Self.FK_Kalıtsal_Hastalık_Kategoriler">
+      <End Role="Kategoriler" EntitySet="Kategoriler" />
+      <End Role="Kalıtsal_Hastalık" EntitySet="Kalıtsal_Hastalık" />
+    </AssociationSet>
+    <AssociationSet Name="FK_yorumlar_Kalıtsal_Hastalık" Association="Self.FK_yorumlar_Kalıtsal_Hastalık">
+      <End Role="Kalıtsal_Hastalık" EntitySet="Kalıtsal_Hastalık" />
+      <End Role="yorumlar" EntitySet="yorumlar" />
+    </AssociationSet>
+    <EntitySet Name="yorumRaporu" EntityType="genfarkModel.yorumRaporu" />
+    <FunctionImport Name="kalıtsalDetay" ReturnType="Collection(genfarkModel.kalıtsalDetay_Result)" />
+    <FunctionImport Name="sp_yorum" ReturnType="Collection(genfarkModel.sp_yorum_Result)" />
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(genfarkModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(genfarkModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <EntityType Name="yorumRaporu">
+    <Key>
+      <PropertyRef Name="KHastalik_ad" />
+      <PropertyRef Name="Yorum_ad" />
+      <PropertyRef Name="Yorum_soyad" />
+      <PropertyRef Name="Yorum_tarih" />
+    </Key>
+    <Property Name="KHastalik_ad" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Yorum_ad" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Yorum_soyad" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Yorum_tarih" Type="DateTime" Nullable="false" Precision="0" />
+  </EntityType>
+  <ComplexType Name="kalıtsalDetay_Result">
+    <Property Type="String" Name="KHastalik_ad" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="KHastalik_bilgi" Nullable="false" />
+    <Property Type="String" Name="KHastalik_foto" Nullable="false" MaxLength="100" />
+    <Property Type="DateTime" Name="KHastalik_tarih" Nullable="false" Precision="16" />
+    <Property Type="String" Name="Kategori_ad" Nullable="false" MaxLength="50" />
+    <Property Type="Int16" Name="Kategoriadet" Nullable="false" />
+    <Property Type="String" Name="KategoriFoto" Nullable="false" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="sp_yorum_Result">
+    <Property Type="Int32" Name="Yorum_id" Nullable="false" />
+    <Property Type="String" Name="Yorum_ad" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Yorum_soyad" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Yorum_mail" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="Yorum_tarih" Nullable="false" Precision="16" />
+    <Property Type="Boolean" Name="Yorum_onay" Nullable="false" />
+    <Property Type="String" Name="Yorum_icerik" Nullable="false" MaxLength="700" />
+    <Property Type="Int32" Name="KHastalik_id" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>
